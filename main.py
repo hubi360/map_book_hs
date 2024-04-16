@@ -5,10 +5,11 @@ users: list = [
 
 ]
 
-def read_friends(users: list)->None:
+
+def read_friends(users: list) -> None:
     print("Informacje o twoich znajomych: ")
     for user in users:
         print(f'\tTwój znajomy {user["name"]} {user["surname"]} opublikował {user["posts"]} postów.')
 
-read_friends(users)
 
+read_friends(users)
