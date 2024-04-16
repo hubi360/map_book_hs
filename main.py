@@ -1,16 +1,9 @@
-imie_1: str = "Artur"
-imie_2: str = "Zuzanna"
-imie_3: str = "Kinga"
-imie_4: str = "Marysia"
+users: list = [
+    {"name": "Julia", "surname": "Gotowiec", "posts": 1500},
+    {"name": "Hubert", "surname": "Sybilski", "posts": 123456},
+    {"name": "Adrian", "surname": "Dobrzański", "posts": 3}
 
-online_1: str = "Online"
-online_2: str = "Offline"
-online_3: str = "Online"
-online_4: str = "Online"
-
-users: list[str] = [imie_1, imie_2, imie_3, imie_4]
-lista_online: list[str] = [online_1, online_2, online_3, online_4]
-print("Lista znajomych to: ")
-for index, user in  enumerate(users):
-    print(f"\tTwoj znajomy {user} jest {lista_online[index]}")
-
+]
+print("Informacje o twoich znajomych: ")
+for user in users:
+    print(f'\tTwój znajomy {user["name"]} {user["surname"]} opublikował {user["posts"]} postów.')
