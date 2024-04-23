@@ -7,14 +7,16 @@ def add_user(lista: list) -> list:  # wezmie liste i potem odd liste
     imie = input("Podaj imie: ")
     nazwisko = input("Podaj nazwisko: ")
     liczba_psotow = int(input("Podaj liczbe postow uzytkownika: "))
-    new_user = {"name": imie, "surname": nazwisko, "posts": liczba_psotow}
+    nazwa_miejscowosci = input("Podaj nazwe miejscowosci: ")
+    new_user = {"name": imie, "surname": nazwisko, "posts": liczba_psotow, 'location': nazwa_miejscowosci}
     lista.append(new_user)
 
-def search_user(users: list):
+def search_user(users: list)->str:
     imie = input("Podaj imie: ")
     for user in users:
         if user["name"] == imie:
             print(user)
+            return user
 def remove_user(users: list):
     imie = input("Podaj imie: ")
     for user in users:
@@ -29,3 +31,5 @@ def update_user(users: list):
             user["surname"] = input("Podaj nowe nazwisko: ")
             user["posts"] = int(input("Podaj nową liczbę postów: "))
             print(users)
+
+
