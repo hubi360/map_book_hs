@@ -14,6 +14,7 @@ if __name__ == '__main__':
         print("6. Generate single map")
         print("7. Generate full map")
         menu_option = input("Choose an option:")
+
         if menu_option == "0":
             break
         if menu_option == "1":
