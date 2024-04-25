@@ -53,7 +53,7 @@ def edytuj_uzytkownika():
     enter_imie.insert(0, users[i].name)
     enter_nazwisko.insert(0, users[i].surname)
     enter_posty.insert(0, users[i].posts)
-    enter_imie.insert(0, users[i].location)
+    enter_lokalizacja.insert(0, users[i].location)
 
     button_dodaj_uzytkownika.config(text = "Zapisz zmiany", command= lambda: aktualizauj_uzytkownika(i))
 def aktualizauj_uzytkownika(i):
