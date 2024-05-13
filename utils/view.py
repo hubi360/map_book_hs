@@ -4,6 +4,7 @@ from models.data_source import users
 import requests
 from bs4 import BeautifulSoup
 
+
 #settings
 users=[]
 class User:
