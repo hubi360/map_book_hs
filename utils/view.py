@@ -1,20 +1,35 @@
 from tkinter import *
 import tkintermapview
 from models.data_source import users
+import requests
+from bs4 import BeautifulSoup
 
 #settings
 users=[]
 class User:
-    def __init__(self, name, surname, posts, location):
+    def __init__(self, name, surname, posts, location): #init metoda magiczna, powoduje przy tworzeniu obiektu są przypisane wartsoci
         self.name = name
         self.surname = surname
         self.posts = posts
         self.location = location
+        self.wspolrzedne = User.wspolrzedne(self) #Self odwolujemy się do uzytkownika ktory jest w tym miejscu - self jest kontekstowy który odwoluje się do danych
+
+    def wspolrzedne(self) -> list: #wywolanie/przypisuje funkcji przez self, metoda wspolrzedne oddaje/zwraca liste ->
+        url: str = f'https://pl.wikipedia.org/wiki/{self.location}'
+        responsse = requests.get(url)
+        responsse_html = BeautifulSoup(responsse.text, 'html.parser')
+        return [
+            float(responsse_html.select('.latitude')[1].text.replace(",", ".")),
+            float(responsse_html.select('.longitude')[1].text.replace(",", "."))
+        ]
+
 
 def lista_uzytkownikow():
-    listbox_lista_obiektow.delete(0, END)
+    listbox_lista_obiektow.delete(0, END) #wyswietla obiekty
     for idx, user in enumerate(users):
         listbox_lista_obiektow.insert(idx, f'{user.name} {user.surname} {user.posts} {user.location}')
+        user.marker = map_widget.set_marker(user.wspolrzedne[0], user.wspolrzedne[1], text=f"{user.name}") #f-string
+
 def dodaj_uzytkownika():
     imie= enter_imie.get()
     nazwisko= enter_nazwisko.get()
@@ -22,6 +37,7 @@ def dodaj_uzytkownika():
     lokalizacja= enter_lokalizacja.get()
     print(imie, nazwisko)
     users.append(User(imie, nazwisko, posty, lokalizacja))
+
     lista_uzytkownikow()
 
     enter_imie.delete(0, END)
@@ -46,7 +62,8 @@ def pokaz_szczegoly_uzytkownika():
     label_nazwisko_szczegoly_obiektu_wartosc.config(text=nazwisko)
     label_posty_szczegoly_obiektu_wartosc.config(text=posty)
     label_lokalizacja_szczegoly_obiektu_wartosc.config(text=lokalizacja)
-
+    map_widget.set_position(users[i].wspolrzedne[0], users[i].wspolrzedne[1])
+    map_widget.set_zoom(12) #przyblizenie do lokalizacji
 
 def edytuj_uzytkownika():
     i = listbox_lista_obiektow.index(ACTIVE)
@@ -150,7 +167,7 @@ label_lokalizacja_szczegoly_obiektu_wartosc.grid(row=1, column=7)
 map_widget = tkintermapview.TkinterMapView(ramka_szczegoly_obiektu, width = 900, height = 500)
 map_widget.set_position(52.21, 21.0)
 map_widget.set_zoom(8)
-marker_WAT = map_widget.set_marker(52.254144, 20.900888, text="WAT")
+#marker_WAT = map_widget.set_marker(52.254144, 20.900888, text="WAT")
 
 map_widget.grid(row = 2, column = 0, columnspan = 8)
 
